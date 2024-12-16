@@ -1,0 +1,151 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "code",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "CardBought",
+				"type": "event"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "fallback"
+			},
+			{
+				"inputs": [],
+				"name": "buyGiftCard",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getAllGiftCards",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "buyer",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "amount",
+								"type": "uint256"
+							},
+							{
+								"internalType": "enum GiftCardStatus",
+								"name": "giftCardStatus",
+								"type": "uint8"
+							}
+						],
+						"internalType": "struct GiftCard[]",
+						"name": "giftcards",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "enum GiftCardStatus",
+						"name": "status",
+						"type": "uint8"
+					}
+				],
+				"name": "getGiftCardByStatus",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "buyer",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "amount",
+								"type": "uint256"
+							},
+							{
+								"internalType": "enum GiftCardStatus",
+								"name": "giftCardStatus",
+								"type": "uint8"
+							}
+						],
+						"internalType": "struct GiftCard[]",
+						"name": "giftcards",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/GiftCardETH.sol": "GiftCardETH"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/GiftCardETH.sol": {
+			"keccak256": "0x8833ebb4a7cf70b8602e4edb4b04298e447377bcb792792b9fed9a18404b2f57",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://d13a98c44669595421a4029bda5fbe941b66ba0edd514d6af1a3b404c033c722",
+				"dweb:/ipfs/QmfPUa84P1GH1jCayg3Wg9N6WMUHh7bqeQWUEKXgGgyP93"
+			]
+		}
+	},
+	"version": 1
+}
