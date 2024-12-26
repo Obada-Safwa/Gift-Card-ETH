@@ -30,6 +30,19 @@
 				"type": "event"
 			},
 			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "CardRedeemed",
+				"type": "event"
+			},
+			{
 				"stateMutability": "payable",
 				"type": "fallback"
 			},
@@ -47,9 +60,9 @@
 					{
 						"components": [
 							{
-								"internalType": "address",
+								"internalType": "string",
 								"name": "buyer",
-								"type": "address"
+								"type": "string"
 							},
 							{
 								"internalType": "uint256",
@@ -60,6 +73,11 @@
 								"internalType": "enum GiftCardStatus",
 								"name": "giftCardStatus",
 								"type": "uint8"
+							},
+							{
+								"internalType": "string",
+								"name": "getter",
+								"type": "string"
 							}
 						],
 						"internalType": "struct GiftCard[]",
@@ -83,9 +101,9 @@
 					{
 						"components": [
 							{
-								"internalType": "address",
+								"internalType": "string",
 								"name": "buyer",
-								"type": "address"
+								"type": "string"
 							},
 							{
 								"internalType": "uint256",
@@ -96,6 +114,11 @@
 								"internalType": "enum GiftCardStatus",
 								"name": "giftCardStatus",
 								"type": "uint8"
+							},
+							{
+								"internalType": "string",
+								"name": "getter",
+								"type": "string"
 							}
 						],
 						"internalType": "struct GiftCard[]",
@@ -104,6 +127,54 @@
 					}
 				],
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getMyCard",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "buyer",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "amount",
+								"type": "uint256"
+							},
+							{
+								"internalType": "enum GiftCardStatus",
+								"name": "giftCardStatus",
+								"type": "uint8"
+							},
+							{
+								"internalType": "string",
+								"name": "getter",
+								"type": "string"
+							}
+						],
+						"internalType": "struct GiftCard[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_code",
+						"type": "string"
+					}
+				],
+				"name": "redeemCard",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -139,11 +210,11 @@
 	},
 	"sources": {
 		"contracts/GiftCardETH.sol": {
-			"keccak256": "0xc8ae1ffa5397acb67b62b27942e264cdb88034d6597ab89ebbdbcc6a7310dafe",
+			"keccak256": "0x8d8d6a92b2491c1f461b88b342c093453f145065f62e4f47c5636f48a4080df4",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://035ffef69f9f623025774c7b26672a3eb61cb03282d5e76610fc9142b28d63a7",
-				"dweb:/ipfs/QmXKApGDPvVz5ezeMhYJvqPvjeMA9xXmfmHxe7bLA9FLN9"
+				"bzz-raw://2543c66807cc333c2a91bdc877e7dbcd0e04a023813564162d535ffd77ebd389",
+				"dweb:/ipfs/QmVtkUki4Ae8BHfbs1uRT71hsurmvRFyX82dpoDD5iqguL"
 			]
 		}
 	},

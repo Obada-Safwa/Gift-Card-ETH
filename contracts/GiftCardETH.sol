@@ -13,16 +13,19 @@ struct User {
     UserType userType;
 }
 struct GiftCard {
-    address buyer;
+    string buyer;
     uint256 amount;
     GiftCardStatus giftCardStatus;
+    string getter;
 }
+
 contract GiftCardETH {
     mapping(address => User) users;
     mapping(string => GiftCard) giftCards;
     bool private locked;
     string[] giftCardCodes;
     address[] userAddresses;
+
     constructor() {
         users[0x8dC03105bA1A429fc962EbE37766B8601D70e0D6] = User(
             "Ibrahim Mohamed",
@@ -35,7 +38,9 @@ contract GiftCardETH {
         );
         userAddresses.push(0xAd009219D5052664e665c2A95f12e4aBeA6730C0);
     }
+
     event CardBought(string code, uint256 amount);
+    event CardRedeemed(uint256 amount);
     modifier adminOnly() {
         require(
             bytes(users[msg.sender].name).length > 0,
@@ -74,6 +79,7 @@ contract GiftCardETH {
         require(!isExist, "Code is Not Unique");
         _;
     }
+
     function getGiftCardByStatus(GiftCardStatus status)
         external
         view
@@ -96,6 +102,7 @@ contract GiftCardETH {
         }
         return result;
     }
+
     function getAllGiftCards()
         external
         view
@@ -109,6 +116,7 @@ contract GiftCardETH {
         }
         return result;
     }
+
     function getRandomNumber(uint256 seed) private view returns (uint256) {
         return
             uint256(
@@ -117,27 +125,89 @@ contract GiftCardETH {
                 )
             ) % 10000;
     }
+
     function generateGiftCardCode() private view returns (string memory) {
-        bytes memory randomString = new bytes(8);
-        for (uint256 i = 0; i < 8; i++) {
+        bytes memory randomString = new bytes(15);
+        for (uint256 i = 0; i < 15; i++) {
             uint256 randomCharCode = getRandomNumber(i);
             randomString[i] = bytes1(uint8(97 + (randomCharCode % 26)));
         }
         return string(randomString);
     }
+
     function addCard(string memory code, uint256 amount)
         private
         checkGiftCardUniqueness(code)
     {
         giftCardCodes.push(code);
-        giftCards[code] = GiftCard(msg.sender, amount, GiftCardStatus.VALID);
+        giftCards[code] = GiftCard(
+            users[msg.sender].name,
+            amount,
+            GiftCardStatus.VALID,
+            ""
+        );
     }
+
     function buyGiftCard() external payable {
         uint256 amount = msg.value;
         string memory code = generateGiftCardCode();
         addCard(code, amount);
         emit CardBought(code, amount);
     }
+
+    function getMyCard() public view returns (GiftCard[] memory) {
+        uint256 count = 0;
+        bytes32 senderNameHash = keccak256(
+            abi.encodePacked(users[msg.sender].name)
+        );
+
+        for (uint256 i = 0; i < giftCardCodes.length; i++) {
+            if (
+                keccak256(
+                    abi.encodePacked(giftCards[giftCardCodes[i]].buyer)
+                ) ==
+                senderNameHash ||
+                keccak256(
+                    abi.encodePacked(giftCards[giftCardCodes[i]].getter)
+                ) ==
+                senderNameHash
+            ) {
+                count++;
+            }
+        }
+
+        GiftCard[] memory myCards = new GiftCard[](count);
+        uint256 index = 0;
+
+        for (uint256 i = 0; i < giftCardCodes.length; i++) {
+            if (
+                keccak256(
+                    abi.encodePacked(giftCards[giftCardCodes[i]].buyer)
+                ) ==
+                senderNameHash ||
+                keccak256(
+                    abi.encodePacked(giftCards[giftCardCodes[i]].getter)
+                ) ==
+                senderNameHash
+            ) {
+                myCards[index] = giftCards[giftCardCodes[i]];
+                index++;
+            }
+        }
+
+        return myCards;
+    }
+    function redeemCard(string calldata _code) public checkGiftCardStatus(_code) reentrancyGuard{
+        (bool status,) = msg.sender.call{value:giftCards[_code].amount}("");
+        if(status){
+            giftCards[_code].giftCardStatus = GiftCardStatus.EXPIRED;
+            giftCards[_code].getter = users[msg.sender].name;
+            emit CardRedeemed(giftCards[_code].amount);
+        }
+
+    }
+
     fallback() external payable {}
+
     receive() external payable {}
 }
