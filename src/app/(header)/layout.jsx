@@ -1,11 +1,12 @@
+import Navbar from "../../components/navbar";
+
 const Layout = ({ children }) => {
-    return (
-        <div className="flex flex-col items-center justify-center h-screen">
-
-            {children}
-
-        </div>
-    );
+  return (
+    <div>
+      <Navbar />
+      {children}
+    </div>
+  );
 };
 
 export default Layout;
