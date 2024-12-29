@@ -1,20 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Form from "../../components/form";
 import FormChildren from "../../components/formchildren";
 import Button from "../../components/button";
+import { useToaster } from "@/contexts/ToasterContext";
 import "../globals.css";
 
 export default function Home() {
   const [amount, setAmount] = useState("");
   const [giftCardCode, setGiftCardCode] = useState("");
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const { toggleToaster } = useToaster();
+  // console.log(ToasterContext);
+  // console.log(toaster);
+  // console.log(toggleToaster);
 
   const handleBuySubmit = (e) => {
     e.preventDefault();
     // Handle buy gift card logic here
-    setIsModalVisible(true);
+    toggleToaster("Gift card bought successfully", "success", true);
     console.log("Buying gift card with amount:", amount);
   };
 

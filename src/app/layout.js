@@ -1,16 +1,16 @@
-import RecoilWrapper from "@/components/RecoilWrapper";
+import ToasterProvider from "@/providers/ToasterProvider";
 import "./globals.css";
 
 export const metadata = {
-  title: "GiftCards ETH",
-  description: "Get GiftCards By Ethereum",
+  title: "Gift Card ETH",
+  description: "Buy gift cards with ETH",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <RecoilWrapper>{children}</RecoilWrapper>
+        <ToasterProvider>{children}</ToasterProvider>
       </body>
     </html>
   );
