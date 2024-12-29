@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ToasterContext } from "@/contexts/ToasterContext";
+import { ToasterContext } from "@/store/contexts/ToasterContext";
 import Toaster from "@/components/toaster";
 
 export const ToasterProvider = ({ children }) => {

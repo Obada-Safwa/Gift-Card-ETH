@@ -4,7 +4,7 @@ import { useState, useContext } from "react";
 import Form from "../../components/form";
 import FormChildren from "../../components/formchildren";
 import Button from "../../components/button";
-import { useToaster } from "@/contexts/ToasterContext";
+import { useToaster } from "@/store/contexts/ToasterContext";
 import "../globals.css";
 
 export default function Home() {

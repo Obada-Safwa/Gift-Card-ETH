@@ -1,7 +1,7 @@
 "use client";
 
 import { Alert, Snackbar } from "@mui/material";
-import { useToaster } from "@/contexts/ToasterContext";
+import { useToaster } from "@/store/contexts/ToasterContext";
 
 export default function Toaster() {
   const { toaster, toggleToaster } = useToaster();

@@ -1,4 +1,4 @@
-import ToasterProvider from "@/providers/ToasterProvider";
+import ToasterProvider from "@/store/providers/ToasterProvider";
 import "./globals.css";
 
 export const metadata = {
