@@ -24,6 +24,7 @@ export default function Navbar() {
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
+              letterSpacing: "0.2rem",
             }}
           >
             GiftCard Shop

@@ -35,6 +35,7 @@ export default function Home() {
             stateName="amount"
             value={amount}
             onAmountChange={setAmount}
+            inputType="number"
           />
           <Button title="Buy" type="submit" />
         </div>

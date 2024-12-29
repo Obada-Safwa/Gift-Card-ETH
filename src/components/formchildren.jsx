@@ -33,7 +33,7 @@ export default function FormChildren(props) {
         color="secondary"
         className={`shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline hover:outline-purple-300 ${props.className}`}
         id={props.label}
-        type="text"
+        type={props.inputType || "text"}
         label={props.label}
       />
     );
