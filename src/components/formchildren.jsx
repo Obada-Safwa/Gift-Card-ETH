@@ -8,31 +8,33 @@ import FormControl from "@mui/material/FormControl";
 import { Select } from "@mui/material";
 
 export default function FormChildren(props) {
-  const [gender, setGender] = useState("");
-
-  const handleChange = (event) => {
-    setGender(event.target.value);
+  const handleTextFieldChange = (e) => {
+    const value = e.target.value;
+    if (props.stateName === "giftCardCode" && props.onGiftCardChange) {
+      props.onGiftCardChange(value);
+    } else if (props.stateName === "amount" && props.onAmountChange) {
+      props.onAmountChange(value);
+    } else if (props.onNameChange) {
+      props.onNameChange(value);
+    }
   };
 
-  const [nameInput, setNameInput] = useState("");
-
-  const childrenTypes = [
-    { type: "textField", label: props.label },
-    { type: "select" },
-  ];
+  const handleSelectChange = (e) => {
+    if (props.onGenderChange) {
+      props.onGenderChange(e.target.value);
+    }
+  };
 
   if (props.type === "textField") {
     return (
       <TextField
-        value={nameInput}
-        onChange={(e) => {
-          setNameInput(e.target.value);
-        }}
+        value={props.value || ""}
+        onChange={handleTextFieldChange}
         color="secondary"
         className={`shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline hover:outline-purple-300 ${props.className}`}
-        id={childrenTypes[0].label}
+        id={props.label}
         type="text"
-        label={childrenTypes[0].label}
+        label={props.label}
       />
     );
   }
@@ -41,13 +43,16 @@ export default function FormChildren(props) {
     return (
       <Box sx={{ minWidth: 120, marginBottom: 2 }}>
         <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+          <InputLabel id="select-label" color="secondary">
+            Gender
+          </InputLabel>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={gender}
+            color="secondary"
+            labelId="select-label"
+            id="select"
+            value={props.value || ""}
             label="Gender"
-            onChange={handleChange}
+            onChange={handleSelectChange}
           >
             <MenuItem value="Male">Male</MenuItem>
             <MenuItem value="Female">Female</MenuItem>
@@ -56,4 +61,6 @@ export default function FormChildren(props) {
       </Box>
     );
   }
+
+  return null;
 }

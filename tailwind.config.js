@@ -6,6 +6,7 @@ export default {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
+    "./components/*.{js,ts,jsx,tsx}",
   ],
 
   theme: {
