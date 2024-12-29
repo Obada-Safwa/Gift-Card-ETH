@@ -1,28 +1,25 @@
 "use client";
 
-import React from "react";
-import Alert from "@mui/material/Alert";
-import { useRecoilState } from "recoil";
-import { toasterState } from "@/store/atoms/toaster";
+import { Alert, Snackbar } from "@mui/material";
+import { useToaster } from "@/contexts/ToasterContext";
 
 export default function Toaster() {
-  const [toaster, setToaster] = useRecoilState(toasterState);
+  const { toaster, toggleToaster } = useToaster();
+
+  const handleClose = () => {
+    toggleToaster("", "", false);
+  };
 
   return (
-    <Alert
-      onClose={() => {
-        setToaster({
-          open: false,
-          message: "",
-          severity: "success",
-        });
-      }}
+    <Snackbar
       open={toaster.open}
-      variant="filled"
-      severity={toaster.severity}
-      className="absolute top-20 right-10"
+      autoHideDuration={2000}
+      onClose={handleClose}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
     >
-      {toaster.message || "This is a filled success Alert."}
-    </Alert>
+      <Alert onClose={handleClose} severity={toaster.severity}>
+        {toaster.message}
+      </Alert>
+    </Snackbar>
   );
 }
