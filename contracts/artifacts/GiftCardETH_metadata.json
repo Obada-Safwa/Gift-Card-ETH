@@ -165,6 +165,49 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "getMyData",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "name",
+								"type": "string"
+							},
+							{
+								"internalType": "enum Gender",
+								"name": "gender",
+								"type": "uint8"
+							},
+							{
+								"internalType": "enum UserType",
+								"name": "userType",
+								"type": "uint8"
+							}
+						],
+						"internalType": "struct User",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "isAdmin",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "string",
@@ -173,6 +216,24 @@
 					}
 				],
 				"name": "redeemCard",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "enum Gender",
+						"name": "gender",
+						"type": "uint8"
+					}
+				],
+				"name": "registration",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -210,11 +271,11 @@
 	},
 	"sources": {
 		"contracts/GiftCardETH.sol": {
-			"keccak256": "0x8d8d6a92b2491c1f461b88b342c093453f145065f62e4f47c5636f48a4080df4",
+			"keccak256": "0x55c477a4f492a6caf512bdf51548f7317551b534cf0259e20d6564536bd8dd74",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://2543c66807cc333c2a91bdc877e7dbcd0e04a023813564162d535ffd77ebd389",
-				"dweb:/ipfs/QmVtkUki4Ae8BHfbs1uRT71hsurmvRFyX82dpoDD5iqguL"
+				"bzz-raw://668ccc3d5c30949d5d6af4ac9205c53e44174d46f8b17d8c9b2b8e7f69cd9764",
+				"dweb:/ipfs/QmdSVXbio7L7RzBRsgR1eMLVMZXm5rvkHP3jxXKw2ef4Ws"
 			]
 		}
 	},

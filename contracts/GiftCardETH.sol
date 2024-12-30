@@ -1,15 +1,20 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
 enum UserType {
-    ADMIN,
-    NORMAL
+    NORMAL,
+    ADMIN
 }
 enum GiftCardStatus {
     EXPIRED,
     VALID
 }
+enum Gender {
+    FEMALE,
+    MALE
+}
 struct User {
     string name;
+    Gender gender;
     UserType userType;
 }
 struct GiftCard {
@@ -29,23 +34,34 @@ contract GiftCardETH {
     constructor() {
         users[0x8dC03105bA1A429fc962EbE37766B8601D70e0D6] = User(
             "Ibrahim Mohamed",
+            Gender.MALE,
             UserType.ADMIN
         );
         userAddresses.push(0x8dC03105bA1A429fc962EbE37766B8601D70e0D6);
         users[0xAd009219D5052664e665c2A95f12e4aBeA6730C0] = User(
             "Obada Safwa",
+            Gender.MALE,
             UserType.ADMIN
         );
         userAddresses.push(0xAd009219D5052664e665c2A95f12e4aBeA6730C0);
+        users[msg.sender] = User(
+            "Deployer",
+            Gender.MALE,
+            UserType.ADMIN
+        );
+        userAddresses.push(msg.sender);
     }
 
     event CardBought(string code, uint256 amount);
     event CardRedeemed(uint256 amount);
-    modifier adminOnly() {
+    modifier registeredUsersOnly() {
         require(
             bytes(users[msg.sender].name).length > 0,
             "User does not exist"
         );
+        _;
+    }
+    modifier adminOnly() {
         require(
             users[msg.sender].userType == UserType.ADMIN,
             "You are not an admin"
@@ -80,9 +96,24 @@ contract GiftCardETH {
         _;
     }
 
+    function registration(string calldata name, Gender gender) external {
+        userAddresses.push(msg.sender);
+        users[msg.sender] = User(name, gender, UserType.NORMAL);
+    }
+
+    function isAdmin() public view registeredUsersOnly returns (bool) {
+        return users[msg.sender].userType == UserType.ADMIN;
+    }
+
+    function getMyData() public view returns (User memory) {
+        return users[msg.sender];
+    }
+
     function getGiftCardByStatus(GiftCardStatus status)
         external
         view
+        registeredUsersOnly
+        adminOnly
         returns (GiftCard[] memory giftcards)
     {
         uint256 count = 0;
@@ -106,6 +137,7 @@ contract GiftCardETH {
     function getAllGiftCards()
         external
         view
+        registeredUsersOnly
         adminOnly
         returns (GiftCard[] memory giftcards)
     {
@@ -148,14 +180,19 @@ contract GiftCardETH {
         );
     }
 
-    function buyGiftCard() external payable {
-        uint256 amount = msg.value;
+    function buyGiftCard() external payable registeredUsersOnly {
+        uint256 amount = (msg.value * 90) / 100;
         string memory code = generateGiftCardCode();
         addCard(code, amount);
         emit CardBought(code, amount);
     }
 
-    function getMyCard() public view returns (GiftCard[] memory) {
+    function getMyCard()
+        public
+        view
+        registeredUsersOnly
+        returns (GiftCard[] memory)
+    {
         uint256 count = 0;
         bytes32 senderNameHash = keccak256(
             abi.encodePacked(users[msg.sender].name)
@@ -197,14 +234,19 @@ contract GiftCardETH {
 
         return myCards;
     }
-    function redeemCard(string calldata _code) public checkGiftCardStatus(_code) reentrancyGuard{
-        (bool status,) = msg.sender.call{value:giftCards[_code].amount}("");
-        if(status){
+
+    function redeemCard(string calldata _code)
+        public
+        checkGiftCardStatus(_code)
+        registeredUsersOnly
+        reentrancyGuard
+    {
+        (bool status, ) = msg.sender.call{value: giftCards[_code].amount}("");
+        if (status) {
             giftCards[_code].giftCardStatus = GiftCardStatus.EXPIRED;
             giftCards[_code].getter = users[msg.sender].name;
             emit CardRedeemed(giftCards[_code].amount);
         }
-
     }
 
     fallback() external payable {}
