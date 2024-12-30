@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Button from "../../components/button";
-import Form from "../../components/form";
-import FormChildren from "../../components/formchildren";
+import Button from "@/components/button";
+import Form from "@/components/form";
+import FormChildren from "@/components/formchildren";
 
 export default function Registration() {
   const [name, setName] = useState("");
