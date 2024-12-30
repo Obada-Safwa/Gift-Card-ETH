@@ -44,12 +44,6 @@ contract GiftCardETH {
             UserType.ADMIN
         );
         userAddresses.push(0xAd009219D5052664e665c2A95f12e4aBeA6730C0);
-        users[msg.sender] = User(
-            "Deployer",
-            Gender.MALE,
-            UserType.ADMIN
-        );
-        userAddresses.push(msg.sender);
     }
 
     event CardBought(string code, uint256 amount);

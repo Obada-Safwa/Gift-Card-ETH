@@ -271,11 +271,11 @@
 	},
 	"sources": {
 		"contracts/GiftCardETH.sol": {
-			"keccak256": "0x55c477a4f492a6caf512bdf51548f7317551b534cf0259e20d6564536bd8dd74",
+			"keccak256": "0xd98ca2acc9645eee06faba99b45a9c015d4b333b3b1639b2534b6e2c550d9959",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://668ccc3d5c30949d5d6af4ac9205c53e44174d46f8b17d8c9b2b8e7f69cd9764",
-				"dweb:/ipfs/QmdSVXbio7L7RzBRsgR1eMLVMZXm5rvkHP3jxXKw2ef4Ws"
+				"bzz-raw://e6dc3d36fed14377dfa9e6e8dd6d9ad963821f35d16b79b73144eb2d4715e76d",
+				"dweb:/ipfs/QmV388dzxJKWFg7WbxjAw4SLGYxLCdMRAzTq5edbNauY7d"
 			]
 		}
 	},
