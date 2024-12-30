@@ -208,6 +208,19 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "isRegistered",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "string",
@@ -271,11 +284,11 @@
 	},
 	"sources": {
 		"contracts/GiftCardETH.sol": {
-			"keccak256": "0xe58c068af0db8918f178747bdc158061002d48dd09f6e01d00e79b88f2dfac27",
+			"keccak256": "0xa29f1471f88171111b1ebd91e4b05e509efedcd65bfa0f2e060c837159b565ea",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://1bf7d2e9f2e04a2623e677132138aa34985c2b5cc050c13b67184d1e4d2255d2",
-				"dweb:/ipfs/QmXcZ1NUnKrDZe4R7LFnGY44dPJWbyYwz79krgabi5hF1q"
+				"bzz-raw://a4af7bbc92dc0ba185a976c09fce2744b5fcf296048acb99a7ff0cc8afae2324",
+				"dweb:/ipfs/Qme3Qy6A6TRqVb1fMtZwhKNhuo1R9LUEiD9429Y8uzPjvW"
 			]
 		}
 	},

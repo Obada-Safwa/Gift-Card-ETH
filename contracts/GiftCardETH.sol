@@ -99,8 +99,12 @@ contract GiftCardETH {
         return users[msg.sender].userType == UserType.ADMIN;
     }
 
-    function getMyData() public view returns (User memory) {
+    function getMyData() public registeredUsersOnly view returns (User memory) {
         return users[msg.sender];
+    }
+
+    function isRegistered() public view returns(bool){
+        return bytes(users[msg.sender].name).length > 0;
     }
 
     function getGiftCardByStatus(GiftCardStatus status)
