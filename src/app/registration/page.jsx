@@ -33,15 +33,16 @@ export default function Registration() {
           />
         </div>
 
-        <FormChildren
-          type="select"
-          value={gender}
-          onGenderChange={setGender}
-        />
+        <FormChildren type="select" value={gender} onGenderChange={setGender} />
 
         <div className="mb-1" />
         <div className="flex items-center justify-center gap-2 ">
-          <Button title="Link Account" type="button" onClick={handleLinkAccount} />
+          <Button
+            id="connect"
+            title="Link Account"
+            type="button"
+            onClick={handleLinkAccount}
+          />
           <Button title="Submit" type="submit" />
         </div>
       </Form>

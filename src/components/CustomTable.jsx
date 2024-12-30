@@ -8,11 +8,15 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { Chip } from "@mui/material";
+import { useFilter } from "@/store/contexts/FilterContext";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
+    background: "linear-gradient(to right, #9333ea, #ec4899)",
     color: theme.palette.common.white,
+    fontSize: 14,
+    fontWeight: 600,
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -23,37 +27,70 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
+  "&:hover": {
+    backgroundColor: "#f3e8ff",
+    transition: "all 0.2s",
+  },
+  // hide last border
   "&:last-child td, &:last-child th": {
     border: 0,
   },
 }));
 
-export default function CustomTable({ rows }) {
+const getStatusChipProps = (status) => {
+  switch (status.toLowerCase()) {
+    case "valid":
+      return { color: "success", label: "Valid", variant: "outlined" };
+    case "expired":
+      return { color: "error", label: "Expired", variant: "outlined" };
+    case "used":
+      return { color: "warning", label: "Used", variant: "outlined" };
+    default:
+      return { color: "default", label: status, variant: "outlined" };
+  }
+};
+
+export default function CustomTable() {
+  const rows = useFilter().filter.myCards || [];
+
   return (
     <TableContainer
       component={Paper}
-      className="flex items-center justify-center flex-col w-10/12 h-4/5 rounded-xl mx-auto mt-10 gap-3 "
+      className="w-11/12 max-w-6xl mx-auto mt-6 rounded-xl shadow-lg overflow-hidden"
     >
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
             <StyledTableCell>Gift Card Code</StyledTableCell>
-            <StyledTableCell align="right">Buyer Name</StyledTableCell>
-            <StyledTableCell align="right">Gift Card Status</StyledTableCell>
-            <StyledTableCell align="right">Gift Card Amount</StyledTableCell>
+            <StyledTableCell>Buyer Name</StyledTableCell>
+            <StyledTableCell>Gift Card User</StyledTableCell>
+            <StyledTableCell>Status</StyledTableCell>
+            <StyledTableCell align="left">Amount (ETH)</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.giftCardCode}>
-              <StyledTableCell component="th" scope="row">
-                {row.giftCardCode}
-              </StyledTableCell>
-              <StyledTableCell align="right">{row.buyerName}</StyledTableCell>
-              <StyledTableCell align="right">{row.status}</StyledTableCell>
-              <StyledTableCell align="right">{row.amount}</StyledTableCell>
-            </StyledTableRow>
-          ))}
+          {rows.map((row) => {
+            const statusProps = getStatusChipProps(row.status);
+            return (
+              <StyledTableRow key={row.giftCardCode}>
+                <StyledTableCell component="th" scope="row">
+                  <span className="font-mono bg-gray-100 px-2 py-1 rounded">
+                    {row.giftCardCode}
+                  </span>
+                </StyledTableCell>
+                <StyledTableCell>{row.buyerName}</StyledTableCell>
+                <StyledTableCell>{row.giftCardUser}</StyledTableCell>
+                <StyledTableCell>
+                  <Chip {...statusProps} />
+                </StyledTableCell>
+                <StyledTableCell>
+                  <span className="font-medium">
+                    {row.amount.toFixed(2)} ETH
+                  </span>
+                </StyledTableCell>
+              </StyledTableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </TableContainer>

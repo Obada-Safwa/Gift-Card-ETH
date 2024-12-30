@@ -11,9 +11,6 @@ export default function Home() {
   const [amount, setAmount] = useState("");
   const [giftCardCode, setGiftCardCode] = useState("");
   const { toggleToaster } = useToaster();
-  // console.log(ToasterContext);
-  // console.log(toaster);
-  // console.log(toggleToaster);
 
   const handleBuySubmit = (e) => {
     e.preventDefault();
