@@ -27,13 +27,16 @@ const Layout = ({ children }) => {
   }, []);
 
   const loggedIn = addresses && addresses.length > 0;
-  const isLoginPage = currentPath === "/login";
   const isLoggedInAndRegistered = !(!loggedIn && !isRegistered);
+
+  const isRegistration = currentPath === "/registration";
+  const isLoginPage = currentPath === "/login";
+
+  if (isLoggedInAndRegistered && (isLoginPage || isRegistration)) redirect("/");
 
   if (!isLoggedInAndRegistered && !isLoginPage) redirect("/login");
   if (!isLoggedInAndRegistered && isLoginPage) return children;
 
-  const isRegistration = currentPath === "/registration";
   if (!isRegistered && loggedIn && !isRegistration) redirect("/registration");
 
   return children;

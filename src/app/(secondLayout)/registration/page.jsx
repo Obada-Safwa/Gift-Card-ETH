@@ -6,25 +6,31 @@ import Form from "@/components/form";
 import FormChildren from "@/components/formchildren";
 import { GENDER_OPTIONS } from "@/utils/constants";
 import { getContract } from "@/utils/web3";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { getFromLocalStorage } from "@/utils/help";
+import LoadingOverlay from "@/components/LoadingOverlay";
 
 export default function Registration() {
-  const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
-    gender: "",
+    gender: 0,
   });
+  const [blocked, setBlocked] = useState(false);
 
   const handleSubmit = async () => {
-    console.log("Name:", formData.name);
-    console.log("Gender:", formData.gender);
+    setBlocked(true);
     const contract = await getContract();
-    const result = await contract.methods
+    const addresses = getFromLocalStorage("addresses");
+    await contract.methods
       .registration(formData.name, formData.gender)
-      .send({ from: getFromLocalStorage("addresses")[0] });
-    console.log(result);
-    router.push("/");
+      .send({ from: addresses[0] });
+
+    const registered = await contract.methods.isRegistered().call({
+      from: addresses[0],
+    });
+    setBlocked(false);
+
+    if (registered) redirect("/");
   };
 
   const onValueChange = (e) => {
@@ -36,6 +42,7 @@ export default function Registration() {
 
   return (
     <div className="w-full flex items-center justify-center flex-col h-screen">
+      <LoadingOverlay open={blocked} />
       <Form title="Create Account" onSubmit={handleSubmit}>
         <div className="mb-4">
           <FormChildren
