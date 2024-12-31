@@ -13,15 +13,12 @@ export default function Home() {
   const { toggleToaster } = useToaster();
 
   const handleBuySubmit = (e) => {
-    e.preventDefault();
-    // Handle buy gift card logic here
     toggleToaster("Gift card bought successfully", "success", true);
     console.log("Buying gift card with amount:", amount);
   };
 
   const handleRedeemSubmit = (e) => {
-    e.preventDefault();
-    // Handle redeem gift card logic here
+    toggleToaster("Gift card redeemed successfully", "success", true);
     console.log("Redeeming gift card with code:", giftCardCode);
   };
 
@@ -35,7 +32,7 @@ export default function Home() {
             className="mx-3"
             stateName="amount"
             value={amount}
-            onAmountChange={setAmount}
+            onChange={(e) => setAmount(e.target.value)}
             inputType="number"
           />
           <Button title="Buy" type="submit" />
@@ -54,7 +51,7 @@ export default function Home() {
             className="mx-3"
             stateName="giftCardCode"
             value={giftCardCode}
-            onGiftCardChange={setGiftCardCode}
+            onChange={(e) => setGiftCardCode(e.target.value)}
           />
           <Button type="submit" title="Redeem" />
         </div>

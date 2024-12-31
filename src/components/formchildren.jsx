@@ -7,55 +7,55 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import { Select } from "@mui/material";
 
-export default function FormChildren(props) {
-  const handleTextFieldChange = (e) => {
-    const value = e.target.value;
-    if (props.stateName === "giftCardCode" && props.onGiftCardChange) {
-      props.onGiftCardChange(value);
-    } else if (props.stateName === "amount" && props.onAmountChange) {
-      props.onAmountChange(value);
-    } else if (props.onNameChange) {
-      props.onNameChange(value);
-    }
+export default function FormChildren({
+  value,
+  onChange,
+  type,
+  label,
+  className,
+  inputType,
+  menuItems,
+}) {
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   };
-
-  const handleSelectChange = (e) => {
-    if (props.onGenderChange) {
-      props.onGenderChange(e.target.value);
-    }
-  };
-
-  if (props.type === "textField") {
+  if (type === "textField") {
     return (
       <TextField
-        value={props.value || ""}
-        onChange={handleTextFieldChange}
+        value={value || ""}
+        onChange={onChange}
         color="secondary"
-        className={`shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline hover:outline-purple-300 ${props.className}`}
-        id={props.label}
-        type={props.inputType || "text"}
-        label={props.label}
+        className={`shadow appearance-none border rounded w-full text-gray-700 leading-tight focus:outline-none focus:shadow-outline hover:outline-purple-300 ${className}`}
+        type={inputType || "text"}
+        name={label}
+        label={capitalizeFirstLetter(label)}
       />
     );
   }
 
-  if (props.type === "select") {
+  if (type === "select") {
+    const menuItemsElement = menuItems.map((item) => (
+      <MenuItem key={item.value} value={item.value}>
+        {item.label}
+      </MenuItem>
+    ));
+
     return (
       <Box sx={{ minWidth: 120, marginBottom: 2 }}>
         <FormControl fullWidth>
           <InputLabel id="select-label" color="secondary">
-            Gender
+            {capitalizeFirstLetter(label)}
           </InputLabel>
           <Select
             color="secondary"
             labelId="select-label"
-            id="select"
-            value={props.value || ""}
-            label="Gender"
-            onChange={handleSelectChange}
+            id={label}
+            name={label}
+            value={value || ""}
+            label={label}
+            onChange={onChange}
           >
-            <MenuItem value="Male">Male</MenuItem>
-            <MenuItem value="Female">Female</MenuItem>
+            {menuItemsElement}
           </Select>
         </FormControl>
       </Box>

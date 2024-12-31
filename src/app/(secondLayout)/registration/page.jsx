@@ -4,20 +4,34 @@ import { useState } from "react";
 import Button from "@/components/button";
 import Form from "@/components/form";
 import FormChildren from "@/components/formchildren";
+import { GENDER_OPTIONS } from "@/utils/constants";
+import { getContract } from "@/utils/web3";
+import { useRouter } from "next/navigation";
+import { getFromLocalStorage } from "@/utils/help";
 
 export default function Registration() {
-  const [name, setName] = useState("");
-  const [gender, setGender] = useState("");
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    name: "",
+    gender: "",
+  });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle registration logic here
-    console.log("Submitting registration with:", { name, gender });
+  const handleSubmit = async () => {
+    console.log("Name:", formData.name);
+    console.log("Gender:", formData.gender);
+    const contract = await getContract();
+    const result = await contract.methods
+      .registration(formData.name, formData.gender)
+      .send({ from: getFromLocalStorage("addresses")[0] });
+    console.log(result);
+    router.push("/");
   };
 
-  const handleLinkAccount = () => {
-    // Handle link account logic here
-    console.log("Linking account...");
+  const onValueChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
   return (
@@ -26,23 +40,24 @@ export default function Registration() {
         <div className="mb-4">
           <FormChildren
             type="textField"
-            label="Name"
+            label="name"
             stateName="nameInput"
-            value={name}
-            onNameChange={setName}
+            value={formData.name}
+            onChange={onValueChange}
           />
         </div>
 
-        <FormChildren type="select" value={gender} onGenderChange={setGender} />
+        <FormChildren
+          type="select"
+          label="gender"
+          stateName="genderInput"
+          value={formData.gender}
+          onChange={onValueChange}
+          menuItems={GENDER_OPTIONS}
+        />
 
         <div className="mb-1" />
         <div className="flex items-center justify-center gap-2 ">
-          <Button
-            id="connect"
-            title="Link Account"
-            type="button"
-            onClick={handleLinkAccount}
-          />
           <Button title="Submit" type="submit" />
         </div>
       </Form>

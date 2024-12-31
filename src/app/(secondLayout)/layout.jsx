@@ -7,41 +7,34 @@ import { useEffect, useState } from "react";
 
 const Layout = ({ children }) => {
   const currentPath = usePathname();
-  const [isRegistered, setIsRegistered] = useState(false);
-  const [addresses, setAddresses] = useState(null);
+  const [isRegistered, setIsRegistered] = useState(true);
+  const addresses = getFromLocalStorage("addresses");
 
   useEffect(() => {
-    setAddresses(getFromLocalStorage("addresses"));
-
-    const checkRegistration = async () => {
+    const init = async () => {
       if (addresses && addresses.length > 0) {
         const contract = await getContract();
         const registered = await contract.methods.isRegistered().call({
           from: addresses[0],
         });
         setIsRegistered(registered);
+      } else {
+        setIsRegistered(false);
       }
     };
 
-    checkRegistration();
+    init();
   }, []);
 
-  const connectedToWallet = addresses && addresses.length > 0;
-  const connectButNotRegistered = connectedToWallet && !isRegistered;
+  const loggedIn = addresses && addresses.length > 0;
+  const isLoginPage = currentPath === "/login";
+  const isLoggedInAndRegistered = !(!loggedIn && !isRegistered);
 
-  if (connectButNotRegistered === null && connectButNotRegistered === null)
-    return (
-      <div className="w-full h-screen flex justify-center items-center">
-        Loading ...
-      </div>
-    );
-  if (
-    isRegistered === false &&
-    currentPath !== "/registration" &&
-    connectedToWallet
-  )
-    redirect("/registration");
-  if (!connectedToWallet && currentPath !== "/login") redirect("/login");
+  if (!isLoggedInAndRegistered && !isLoginPage) redirect("/login");
+  if (!isLoggedInAndRegistered && isLoginPage) return children;
+
+  const isRegistration = currentPath === "/registration";
+  if (!isRegistered && loggedIn && !isRegistration) redirect("/registration");
 
   return children;
 };
