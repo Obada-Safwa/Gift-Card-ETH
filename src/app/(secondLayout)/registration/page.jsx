@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "@/components/button";
 import Form from "@/components/form";
 import FormChildren from "@/components/formchildren";
@@ -16,6 +16,20 @@ export default function Registration() {
     gender: 0,
   });
   const [blocked, setBlocked] = useState(false);
+
+  useEffect(() => {
+    const init = async () => {
+      const addresses = getFromLocalStorage("addresses");
+
+      const contract = await getContract();
+      const registered = await contract.methods.isRegistered().call({
+        from: addresses[0],
+      });
+      if (registered) redirect("/");
+    };
+
+    init();
+  }, []);
 
   const handleSubmit = async () => {
     setBlocked(true);
