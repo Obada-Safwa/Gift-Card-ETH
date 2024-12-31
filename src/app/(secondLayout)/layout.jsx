@@ -32,7 +32,7 @@ const Layout = ({ children }) => {
   const isRegistration = currentPath === "/registration";
   const isLoginPage = currentPath === "/login";
 
-  if (isLoggedInAndRegistered && (isLoginPage || isRegistration)) redirect("/");
+  if (isLoggedInAndRegistered && isLoginPage && isRegistration) redirect("/");
 
   if (!isLoggedInAndRegistered && !isLoginPage) redirect("/login");
   if (!isLoggedInAndRegistered && isLoginPage) return children;
