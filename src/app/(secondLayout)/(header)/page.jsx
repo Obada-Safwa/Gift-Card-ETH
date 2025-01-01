@@ -6,19 +6,59 @@ import FormChildren from "@/components/formchildren";
 import Button from "@/components/button";
 import { useToaster } from "@/store/contexts/ToasterContext";
 import "@/app/globals.css";
+import { getContract } from "@/utils/web3";
+import { getFromLocalStorage } from "@/utils/help";
 
 export default function Home() {
   const [amount, setAmount] = useState("");
   const [giftCardCode, setGiftCardCode] = useState("");
   const { toggleToaster } = useToaster();
 
-  const handleBuySubmit = (e) => {
-    toggleToaster("Gift card bought successfully", "success", true);
+  const handleBuySubmit = async (e) => {
+    // const amount = e.target.amount.value;
+    console.log("What is e:", e);
     console.log("Buying gift card with amount:", amount);
+    const contract = await getContract();
+    const addresses = getFromLocalStorage("addresses");
+    await contract.methods
+      .buyGiftCard()
+      .send({ from: addresses[0] })
+      .then((res) => {
+        console.log("Transaction successful:", res);
+        // console.log(
+        //   "MY RETURN VALUES EVENT: ",
+        //   contract.events.CardBought().returnValues
+        // );
+        toggleToaster(
+          `You can now redeem your gift card worth ${amount}`,
+          "success",
+          true
+        );
+        contract.events.CardBought().on("data", function (event) {
+          const { code, amount } = event.returnValues;
+          console.log("Gift Card Code:", code);
+          console.log("Amount:", amount);
+          setTimeout(() => {
+            toggleToaster(`Your code is ${code}`, "success", true);
+          }, 5000);
+        });
+      });
   };
 
-  const handleRedeemSubmit = (e) => {
-    toggleToaster("Gift card redeemed successfully", "success", true);
+  const handleRedeemSubmit = async (e) => {
+    const contract = await getContract();
+    const addresses = getFromLocalStorage("addresses");
+    await contract.methods
+      .redeemCard(giftCardCode)
+      .send({ from: addresses[0] })
+      .then((res) => {
+        console.log("Transaction successful:", res);
+        // console.log(
+        //   "MY RETURN VALUES EVENT: ",
+        //   contract.events.CardBought().returnValues
+        // );
+        toggleToaster("Gift card redeemed successfully", "success", true);
+      });
     console.log("Redeeming gift card with code:", giftCardCode);
   };
 
