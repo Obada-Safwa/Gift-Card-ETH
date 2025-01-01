@@ -3,16 +3,7 @@ import FilterChild from "./FilterChild";
 import { FunnelIcon } from "@heroicons/react/24/solid";
 import { getContract } from "@/utils/web3";
 import { getFromLocalStorage } from "@/utils/help";
-
-const cardsLength = async () => {
-  const contract = await getContract();
-  const addresses = getFromLocalStorage("addresses");
-  const cards = await contract.methods.getMyCard().call({
-    from: addresses[0],
-  });
-  myCards.push(cards);
-};
-cardsLength();
+import isAdmin from "@/utils/help";
 
 export default function Filter() {
   const { myCards, allCards, setFilter } = useFilter();
@@ -50,20 +41,48 @@ export default function Filter() {
     {
       name: "Valid",
       number: valid.length,
-      onClick: () => {
-        setFilter(valid);
+      onClick: async () => {
+        const contract = await getContract();
+        const addresses = getFromLocalStorage("addresses");
+        const cards = await contract.methods.getMyCard().call({
+          from: addresses[0],
+        });
+
+        const myValidCards = cards.filter((card) => card[2] === 1n);
+        // console.log("Raw cards data: FILTER", myValidCards);
+        statusAssigner(myValidCards);
+        // console.log(
+        //   "Raw cards data: FILTER AFTER AFTER AFTER",
+        //   typeof cards[0][2]
+        // );
+        // myCards.push(...cards);
+        setFilter(myValidCards);
       },
     },
     {
       name: "Expired",
       number: expired.length,
-      onClick: () => {
-        setFilter(expired);
+      onClick: async () => {
+        const contract = await getContract();
+        const addresses = getFromLocalStorage("addresses");
+        const cards = await contract.methods.getMyCard().call({
+          from: addresses[0],
+        });
+
+        const myExpiredCards = cards.filter((card) => card[2] === 0n);
+        // console.log("Raw cards data: FILTER", myExpiredCards);
+        statusAssigner(myExpiredCards);
+        // console.log(
+        //   "Raw cards data: FILTER AFTER AFTER AFTER",
+        //   typeof cards[0][2]
+        // );
+        // myCards.push(...cards);
+        setFilter(myExpiredCards);
       },
     },
   ];
 
-  const isAdmin = true;
+  // const isAdmin = true;
 
   if (isAdmin) {
     filterBtns.push({
@@ -87,15 +106,30 @@ export default function Filter() {
     filterBtns.push({
       name: "All Cards valid cards",
       number: allCards.filter((card) => card.status === "Valid").length,
-      onClick: () => {
-        setFilter(allCards.filter((card) => card.status === "Valid"));
+      onClick: async () => {
+        const contract = await getContract();
+        const addresses = getFromLocalStorage("addresses");
+        const cards = await contract.methods
+          .getGiftCardByStatus(1)
+          .call({ from: addresses[0] });
+        // console.log("Raw cards data: FILTER", typeof cards[0][2]);
+        statusAssigner(cards);
+        setFilter(cards);
       },
     });
     filterBtns.push({
       name: "All Cards expired cards",
       number: allCards.filter((card) => card.status === "Expired").length,
-      onClick: () => {
-        setFilter(allCards.filter((card) => card.status === "Expired"));
+      onClick: async () => {
+        const contract = await getContract();
+        const addresses = getFromLocalStorage("addresses");
+        const cards = await contract.methods
+          .getGiftCardByStatus(0)
+          .call({ from: addresses[0] });
+        // console.log("Raw cards data: FILTER", typeof cards[0][2]);
+        statusAssigner(cards);
+        setFilter(cards);
+        // setFilter(allCards.filter((card) => card.status === "Expired"));
       },
     });
   }
