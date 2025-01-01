@@ -10,6 +10,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Chip } from "@mui/material";
 import { useFilter } from "@/store/contexts/FilterContext";
+import { ethers } from "ethers";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -38,10 +39,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const getStatusChipProps = (status) => {
-  switch (status.toLowerCase()) {
-    case "valid":
+  // console.log("TYPE OF STATUS", typeof status);
+  switch (status) {
+    case 1:
       return { color: "success", label: "Valid", variant: "outlined" };
-    case "expired":
+    case 0:
       return { color: "error", label: "Expired", variant: "outlined" };
     case "used":
       return { color: "warning", label: "Used", variant: "outlined" };
@@ -52,7 +54,8 @@ const getStatusChipProps = (status) => {
 
 export default function CustomTable() {
   const rows = useFilter().filter.myCards || [];
-
+  // console.log("CUSTOM TABLE", rows);
+  // console.log("CUSTOM TABLE TYPE", typeof rows[0][2]);
   return (
     <TableContainer
       component={Paper}
@@ -70,7 +73,9 @@ export default function CustomTable() {
         </TableHead>
         <TableBody>
           {rows.map((row) => {
-            const statusProps = getStatusChipProps(row.status);
+            const statusProps = getStatusChipProps(row[2]);
+            // console.log(statusProps);
+            // console.log(row["buyer"]);
             return (
               <StyledTableRow key={row.giftCardCode}>
                 <StyledTableCell component="th" scope="row">
@@ -78,14 +83,17 @@ export default function CustomTable() {
                     {row.giftCardCode}
                   </span>
                 </StyledTableCell>
-                <StyledTableCell>{row.buyerName}</StyledTableCell>
-                <StyledTableCell>{row.giftCardUser}</StyledTableCell>
+                <StyledTableCell>{row["buyer"]}</StyledTableCell>
+                <StyledTableCell>{row["giftCardUser"]}</StyledTableCell>
                 <StyledTableCell>
                   <Chip {...statusProps} />
                 </StyledTableCell>
                 <StyledTableCell>
                   <span className="font-medium">
-                    {row.amount.toFixed(2)} ETH
+                    {row[1]
+                      ? ethers.formatUnits(row[1].toString(), "ether")
+                      : "0"}{" "}
+                    ETH
                   </span>
                 </StyledTableCell>
               </StyledTableRow>

@@ -1,6 +1,18 @@
 import { useFilter } from "@/store/contexts/FilterContext";
 import FilterChild from "./FilterChild";
 import { FunnelIcon } from "@heroicons/react/24/solid";
+import { getContract } from "@/utils/web3";
+import { getFromLocalStorage } from "@/utils/help";
+
+const cardsLength = async () => {
+  const contract = await getContract();
+  const addresses = getFromLocalStorage("addresses");
+  const cards = await contract.methods.getMyCard().call({
+    from: addresses[0],
+  });
+  myCards.push(cards);
+};
+cardsLength();
 
 export default function Filter() {
   const { myCards, allCards, setFilter } = useFilter();
@@ -8,12 +20,31 @@ export default function Filter() {
   const valid = myCards.filter((card) => card.status === "Valid");
   const expired = myCards.filter((card) => card.status === "Expired");
 
+  const statusAssigner = (cards) => {
+    cards.map((card) => {
+      // console.log("Raw cards data: FILTER", card[2]);
+      card[2] === 1n ? (card[2] = 1) : (card[2] = 0);
+    });
+  };
+
   const filterBtns = [
     {
       name: "My Cards",
       number: myCards.length,
-      onClick: () => {
-        setFilter(myCards);
+      onClick: async () => {
+        const contract = await getContract();
+        const addresses = getFromLocalStorage("addresses");
+        const cards = await contract.methods.getMyCard().call({
+          from: addresses[0],
+        });
+        // console.log("Raw cards data: FILTER", cards);
+        statusAssigner(cards);
+        // console.log(
+        //   "Raw cards data: FILTER AFTER AFTER AFTER",
+        //   typeof cards[0][2]
+        // );
+        // myCards.push(...cards);
+        setFilter(cards);
       },
     },
     {
@@ -38,8 +69,19 @@ export default function Filter() {
     filterBtns.push({
       name: "All Cards",
       number: allCards.length,
-      onClick: () => {
-        setFilter(allCards);
+      onClick: async () => {
+        const contract = await getContract();
+        const addresses = getFromLocalStorage("addresses");
+        const cards = await contract.methods
+          .getAllGiftCards()
+          .call({ from: addresses[0] });
+        // console.log("Raw cards data: FILTER", typeof cards[0][2]);
+        statusAssigner(cards);
+        // console.log(
+        //   "Raw cards data: FILTER AFTER AFTER AFETR",
+        //   typeof cards[0][2]
+        // );
+        setFilter(cards);
       },
     });
     filterBtns.push({

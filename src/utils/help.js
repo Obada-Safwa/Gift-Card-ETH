@@ -10,4 +10,12 @@ const setToLocalStorage = (key, value) => {
   return localStorage.setItem(key, JSON.stringify(value));
 };
 
-export { getFromLocalStorage, setToLocalStorage };
+const isAdmin = async () => {
+  const contract = await getContract();
+  const addresses = getFromLocalStorage("addresses");
+  return await contract.methods.isAdmin().call({
+    from: addresses[0],
+  });
+};
+
+export { getFromLocalStorage, setToLocalStorage, isAdmin };
