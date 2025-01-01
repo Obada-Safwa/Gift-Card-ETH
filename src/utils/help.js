@@ -1,3 +1,5 @@
+import { getContract } from "./web3";
+
 const getFromLocalStorage = (key) => {
   if (typeof window === "undefined") return null;
 

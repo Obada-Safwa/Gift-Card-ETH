@@ -3,7 +3,7 @@ import FilterChild from "./FilterChild";
 import { FunnelIcon } from "@heroicons/react/24/solid";
 import { getContract } from "@/utils/web3";
 import { getFromLocalStorage } from "@/utils/help";
-import isAdmin from "@/utils/help";
+import { isAdmin } from "@/utils/help";
 
 export default function Filter() {
   const { myCards, allCards, setFilter } = useFilter();
