@@ -61,45 +61,9 @@
 						"components": [
 							{
 								"internalType": "string",
-								"name": "buyer",
+								"name": "code",
 								"type": "string"
 							},
-							{
-								"internalType": "uint256",
-								"name": "amount",
-								"type": "uint256"
-							},
-							{
-								"internalType": "enum GiftCardStatus",
-								"name": "giftCardStatus",
-								"type": "uint8"
-							},
-							{
-								"internalType": "string",
-								"name": "getter",
-								"type": "string"
-							}
-						],
-						"internalType": "struct GiftCard[]",
-						"name": "giftcards",
-						"type": "tuple[]"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "enum GiftCardStatus",
-						"name": "status",
-						"type": "uint8"
-					}
-				],
-				"name": "getGiftCardByStatus",
-				"outputs": [
-					{
-						"components": [
 							{
 								"internalType": "string",
 								"name": "buyer",
@@ -135,6 +99,11 @@
 				"outputs": [
 					{
 						"components": [
+							{
+								"internalType": "string",
+								"name": "code",
+								"type": "string"
+							},
 							{
 								"internalType": "string",
 								"name": "buyer",
@@ -284,11 +253,11 @@
 	},
 	"sources": {
 		"contracts/GiftCardETH.sol": {
-			"keccak256": "0xa29f1471f88171111b1ebd91e4b05e509efedcd65bfa0f2e060c837159b565ea",
+			"keccak256": "0xe0965487a65931a33f169ea7deeeacc62b74c2df4c5f07d5817da0039ac6811a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://a4af7bbc92dc0ba185a976c09fce2744b5fcf296048acb99a7ff0cc8afae2324",
-				"dweb:/ipfs/Qme3Qy6A6TRqVb1fMtZwhKNhuo1R9LUEiD9429Y8uzPjvW"
+				"bzz-raw://f99e11ad0de73367e5e3db7f872cf21ee4b03e1e0117532467e997d482d76f9d",
+				"dweb:/ipfs/QmT5gYKMZXVdEamHFCTWnTuBzZjmWsMSQRxUW2NSQyaqEi"
 			]
 		}
 	},

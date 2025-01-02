@@ -18,6 +18,7 @@ struct User {
     UserType userType;
 }
 struct GiftCard {
+    string code;
     string buyer;
     uint256 amount;
     GiftCardStatus giftCardStatus;
@@ -89,49 +90,19 @@ contract GiftCardETH {
         require(!isExist, "Code is Not Unique");
         _;
     }
-
     function registration(string calldata name, Gender gender) external {
         userAddresses.push(msg.sender);
         users[msg.sender] = User(name, gender, UserType.NORMAL);
     }
-
     function isAdmin() public view registeredUsersOnly returns (bool) {
         return users[msg.sender].userType == UserType.ADMIN;
     }
-
     function getMyData() public registeredUsersOnly view returns (User memory) {
         return users[msg.sender];
     }
-
     function isRegistered() public view returns(bool){
         return bytes(users[msg.sender].name).length > 0;
     }
-
-    function getGiftCardByStatus(GiftCardStatus status)
-        external
-        view
-        registeredUsersOnly
-        adminOnly
-        returns (GiftCard[] memory giftcards)
-    {
-        uint256 count = 0;
-        uint256 length = giftCardCodes.length;
-        for (uint256 i = 0; i < length; i++) {
-            if (giftCards[giftCardCodes[i]].giftCardStatus == status) {
-                count++;
-            }
-        }
-        GiftCard[] memory result = new GiftCard[](count);
-        uint256 index = 0;
-        for (uint256 i = 0; i < length; i++) {
-            if (giftCards[giftCardCodes[i]].giftCardStatus == status) {
-                result[index] = giftCards[giftCardCodes[i]];
-                index++;
-            }
-        }
-        return result;
-    }
-
     function getAllGiftCards()
         external
         view
@@ -146,7 +117,6 @@ contract GiftCardETH {
         }
         return result;
     }
-
     function getRandomNumber(uint256 seed) private view returns (uint256) {
         return
             uint256(
@@ -155,7 +125,6 @@ contract GiftCardETH {
                 )
             ) % 10000;
     }
-
     function generateGiftCardCode() private view returns (string memory) {
         bytes memory randomString = new bytes(15);
         for (uint256 i = 0; i < 15; i++) {
@@ -164,27 +133,25 @@ contract GiftCardETH {
         }
         return string(randomString);
     }
-
     function addCard(string memory code, uint256 amount)
         private
         checkGiftCardUniqueness(code)
     {
         giftCardCodes.push(code);
         giftCards[code] = GiftCard(
+            code,
             users[msg.sender].name,
             amount,
             GiftCardStatus.VALID,
             ""
         );
     }
-
     function buyGiftCard() external payable registeredUsersOnly {
         uint256 amount = (msg.value * 90) / 100;
         string memory code = generateGiftCardCode();
         addCard(code, amount);
         emit CardBought(code, amount);
     }
-
     function getMyCard()
         public
         view
@@ -232,20 +199,26 @@ contract GiftCardETH {
 
         return myCards;
     }
-
     function redeemCard(string calldata _code)
-        public
+        external
         checkGiftCardStatus(_code)
         registeredUsersOnly
         reentrancyGuard
     {
-        (bool status, ) = msg.sender.call{value: giftCards[_code].amount}("");
-        if (status) {
-            giftCards[_code].giftCardStatus = GiftCardStatus.EXPIRED;
-            giftCards[_code].getter = users[msg.sender].name;
-            emit CardRedeemed(giftCards[_code].amount);
-        }
+        GiftCard storage giftCard = giftCards[_code]; 
+        uint256 amount = giftCard.amount;
+
+        require(amount > 0, "Gift card has no balance");
+
+        giftCard.giftCardStatus = GiftCardStatus.EXPIRED;
+        giftCard.getter = users[msg.sender].name;
+
+        (bool success, ) = msg.sender.call{value: amount}("");
+        require(success, "Ether transfer failed");
+
+        emit CardRedeemed(amount); 
     }
+
 
     fallback() external payable {}
 
