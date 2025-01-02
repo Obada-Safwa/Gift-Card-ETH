@@ -1,15 +1,17 @@
 "use client";
 
-import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { Chip } from "@mui/material";
-import { useFilter } from "@/store/contexts/FilterContext";
+import {
+  Chip,
+  Table,
+  Paper,
+  TableRow,
+  styled,
+  TableBody,
+  TableHead,
+  TableContainer,
+} from "@mui/material";
+import { useFilterCards } from "@/store/contexts/FilterCardsContext";
 import { ethers } from "ethers";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -32,30 +34,25 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: "#f3e8ff",
     transition: "all 0.2s",
   },
-  // hide last border
   "&:last-child td, &:last-child th": {
     border: 0,
   },
 }));
 
 const getStatusChipProps = (status) => {
-  // console.log("TYPE OF STATUS", typeof status);
   switch (status) {
-    case 1:
+    case 1n:
       return { color: "success", label: "Valid", variant: "outlined" };
-    case 0:
+    case 0n:
       return { color: "error", label: "Expired", variant: "outlined" };
-    case "used":
-      return { color: "warning", label: "Used", variant: "outlined" };
     default:
       return { color: "default", label: status, variant: "outlined" };
   }
 };
 
 export default function CustomTable() {
-  const rows = useFilter().filter.myCards || [];
-  // console.log("CUSTOM TABLE", rows);
-  // console.log("CUSTOM TABLE TYPE", typeof rows[0][2]);
+  const rows = useFilterCards().currentCards || [];
+
   return (
     <TableContainer
       component={Paper}
@@ -73,9 +70,7 @@ export default function CustomTable() {
         </TableHead>
         <TableBody>
           {rows.map((row) => {
-            const statusProps = getStatusChipProps(row[2]);
-            // console.log(statusProps);
-            // console.log(row["buyer"]);
+            const statusProps = getStatusChipProps(row.giftCardStatus);
             return (
               <StyledTableRow key={row.giftCardCode}>
                 <StyledTableCell component="th" scope="row">

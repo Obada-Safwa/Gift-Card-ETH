@@ -1,5 +1,3 @@
-import { getContract } from "./web3";
-
 const getFromLocalStorage = (key) => {
   if (typeof window === "undefined") return null;
 
@@ -12,9 +10,7 @@ const setToLocalStorage = (key, value) => {
   return localStorage.setItem(key, JSON.stringify(value));
 };
 
-const isAdmin = async () => {
-  const contract = await getContract();
-  const addresses = getFromLocalStorage("addresses");
+const isAdmin = async (contract, addresses) => {
   return await contract.methods.isAdmin().call({
     from: addresses[0],
   });

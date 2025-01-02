@@ -15,7 +15,6 @@ export default function Home() {
   const { toggleToaster } = useToaster();
 
   const handleBuySubmit = async (e) => {
-    // const amount = e.target.amount.value;
     console.log("What is e:", e);
     console.log("Buying gift card with amount:", amount);
     const contract = await getContract();
@@ -24,11 +23,6 @@ export default function Home() {
       .buyGiftCard()
       .send({ from: addresses[0] })
       .then((res) => {
-        console.log("Transaction successful:", res);
-        // console.log(
-        //   "MY RETURN VALUES EVENT: ",
-        //   contract.events.CardBought().returnValues
-        // );
         toggleToaster(
           `You can now redeem your gift card worth ${amount}`,
           "success",
@@ -52,11 +46,6 @@ export default function Home() {
       .redeemCard(giftCardCode)
       .send({ from: addresses[0] })
       .then((res) => {
-        console.log("Transaction successful:", res);
-        // console.log(
-        //   "MY RETURN VALUES EVENT: ",
-        //   contract.events.CardBought().returnValues
-        // );
         toggleToaster("Gift card redeemed successfully", "success", true);
       });
     console.log("Redeeming gift card with code:", giftCardCode);

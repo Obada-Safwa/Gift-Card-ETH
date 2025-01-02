@@ -1,55 +1,52 @@
-import { useState } from "react";
-import { FilterContext } from "@/store/contexts/FilterContext";
+"use client";
 
-const myCards = [];
-
-let allCards;
-
-const isAdmin = true;
-if (isAdmin) {
-  allCards = [
-    ...myCards,
-    {
-      giftCardCode: "123",
-      buyerName: "123",
-      giftCardUser: "123",
-      status: "123",
-      amount: 25,
-    },
-    {
-      giftCardCode: "XCVBN=dsM76KL",
-      buyerName: "Michael",
-      giftCardUser: "alpha789",
-      status: "Used",
-      amount: 0,
-    },
-  ];
-}
+import { FilterCardsContext } from "@/store/contexts/FilterCardsContext";
+import LoadingOverlay from "@/components/LoadingOverlay";
+import { getFromLocalStorage, isAdmin } from "@/utils/help";
+import { useEffect, useState } from "react";
+import { getContract } from "@/utils/web3";
 
 const FilterProvider = ({ children }) => {
-  let initialValues;
-  if (isAdmin) {
-    initialValues = { allCards: allCards, myCards: myCards };
-  } else {
-    initialValues = { myCards: myCards };
-  }
+  const [initialValues, setInitialValues] = useState(null);
+  const [currentCards, setCurrentCards] = useState();
 
-  const [filter, setFilter] = useState(initialValues);
+  useEffect(() => {
+    const init = async () => {
+      const contract = await getContract();
+      const addresses = getFromLocalStorage("addresses");
+      const admin = await isAdmin(contract, addresses);
 
-  let value = {
-    filter,
-    myCards: myCards,
-    setFilter: (filteredCards) => {
-      setFilter((prev) => ({
-        myCards: filteredCards,
-      }));
-    },
+      const myCards = await contract.methods.getMyCard().call({
+        from: addresses[0],
+      });
+
+      if (admin) {
+        const allCards = await contract.methods
+          .getAllGiftCards()
+          .call({ from: addresses[0] });
+        setInitialValues({ allCards, myCards, admin });
+      } else {
+        setInitialValues({ allCards: [], myCards });
+      }
+
+      setCurrentCards(myCards);
+    };
+
+    init();
+  }, []);
+
+  const value = {
+    ...initialValues,
+    currentCards,
+    setCurrentCards,
   };
 
-  if (isAdmin) value["allCards"] = allCards;
+  if (!initialValues) return <LoadingOverlay open={true} />;
 
   return (
-    <FilterContext.Provider value={value}>{children}</FilterContext.Provider>
+    <FilterCardsContext.Provider value={value}>
+      {children}
+    </FilterCardsContext.Provider>
   );
 };
 

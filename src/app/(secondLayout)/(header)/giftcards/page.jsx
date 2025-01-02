@@ -4,7 +4,7 @@ import FilterProvider from "@/store/providers/FilterProvider";
 import CustomTable from "@/components/CustomTable";
 import Filter from "@/components/Filter";
 
-const page = () => {
+const GiftCardsPage = () => {
   return (
     <FilterProvider>
       <Filter />
@@ -13,4 +13,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default GiftCardsPage;
