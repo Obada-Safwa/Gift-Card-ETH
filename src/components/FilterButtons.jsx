@@ -16,14 +16,14 @@ const FilterButtons = ({ setCurrentCards, myCards, allCards, admin }) => {
     },
     {
       name: "Valid",
-      number: valid.length,
+      number: myValid.length,
       onClick: () => {
         setCurrentCards(myValid);
       },
     },
     {
       name: "Expired",
-      number: expired.length,
+      number: myExpired.length,
       onClick: () => {
         setCurrentCards(myExpired);
       },

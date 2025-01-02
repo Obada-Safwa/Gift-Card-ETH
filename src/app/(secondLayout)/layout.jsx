@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 const Layout = ({ children }) => {
   const currentPath = usePathname();
-  const [isRegistered, setIsRegistered] = useState(true);
+  const [isRegistered, setIsRegistered] = useState(null);
   const addresses = getFromLocalStorage("addresses");
 
   useEffect(() => {
@@ -36,13 +36,16 @@ const Layout = ({ children }) => {
   if (!isLoggedInAndRegistered && isLoginPage) return children;
 
   if (!isRegistered && loggedIn && !isRegistration) redirect("/registration");
-  // if (isLoggedInAndRegistered) return children;
-  if (
-    loggedIn &&
-    isRegistered &&
-    (currentPath === "/registration" || currentPath === "/login")
-  )
-    redirect("/");
+
+  useEffect(() => {
+    if (
+      loggedIn &&
+      isRegistered &&
+      (currentPath === "/registration" || currentPath === "/login")
+    )
+      redirect("/");
+  }, []);
+
   return children;
 };
 

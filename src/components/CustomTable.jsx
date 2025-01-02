@@ -70,12 +70,14 @@ export default function CustomTable() {
         </TableHead>
         <TableBody>
           {rows.map((row) => {
+            console.log(row);
+
             const statusProps = getStatusChipProps(row.giftCardStatus);
             return (
-              <StyledTableRow key={row.giftCardCode}>
+              <StyledTableRow key={row.code}>
                 <StyledTableCell component="th" scope="row">
                   <span className="font-mono bg-gray-100 px-2 py-1 rounded">
-                    {row.giftCardCode}
+                    {row.code}
                   </span>
                 </StyledTableCell>
                 <StyledTableCell>{row["buyer"]}</StyledTableCell>
@@ -85,10 +87,7 @@ export default function CustomTable() {
                 </StyledTableCell>
                 <StyledTableCell>
                   <span className="font-medium">
-                    {row[1]
-                      ? ethers.formatUnits(row[1].toString(), "ether")
-                      : "0"}{" "}
-                    ETH
+                    {ethers.formatUnits(row.amount.toString(), "ether")} ETH
                   </span>
                 </StyledTableCell>
               </StyledTableRow>
