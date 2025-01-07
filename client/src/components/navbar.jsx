@@ -1,3 +1,5 @@
+"use client";
+
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -6,8 +8,30 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import Link from "next/link";
+import { getContract } from "@/utils/web3";
+import { getFromLocalStorage } from "@/utils/help";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
+  const [myData, setMyData] = useState(null);
+
+  useEffect(() => {
+    const init = async () => {
+      const contract = await getContract();
+      const addresses = getFromLocalStorage("addresses");
+
+      const data = await contract.methods.getMyData().call({
+        from: addresses[0],
+      });
+
+      setMyData(data);
+    };
+
+    init();
+  }, []);
+
+  console.log(myData);
+
   return (
     <AppBar position="static" sx={{ backgroundColor: "purple" }}>
       <Container maxWidth="xl">
