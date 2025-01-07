@@ -74,7 +74,18 @@ export default function Navbar() {
               </svg>
               My Gift Cards
             </Link>
-            <Box sx={{ flexGrow: 0 }}>
+            <Box sx={{ flexGrow: 0, display: 'flex', alignItems: 'center', gap: 2 }}>
+              {myData && (
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: 'white',
+                    fontFamily: 'monospace',
+                  }}
+                >
+                  {myData.name}
+                </Typography>
+              )}
               <IconButton sx={{ p: 0 }}>
                 <Avatar alt="Profile Image" src="" />
               </IconButton>
