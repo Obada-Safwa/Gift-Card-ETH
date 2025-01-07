@@ -70,8 +70,6 @@ export default function CustomTable() {
         </TableHead>
         <TableBody>
           {rows.map((row) => {
-            console.log(row);
-
             const statusProps = getStatusChipProps(row.giftCardStatus);
             return (
               <StyledTableRow key={row.code}>
@@ -80,8 +78,8 @@ export default function CustomTable() {
                     {row.code}
                   </span>
                 </StyledTableCell>
-                <StyledTableCell>{row["buyer"]}</StyledTableCell>
-                <StyledTableCell>{row["giftCardUser"]}</StyledTableCell>
+                <StyledTableCell>{row.buyer}</StyledTableCell>
+                <StyledTableCell>{row.giftCardUser}</StyledTableCell>
                 <StyledTableCell>
                   <Chip {...statusProps} />
                 </StyledTableCell>
