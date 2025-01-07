@@ -24,6 +24,7 @@ export default function Navbar() {
         from: addresses[0],
       });
 
+      console.log('myData structure:', data);
       setMyData(data);
     };
 
@@ -87,7 +88,14 @@ export default function Navbar() {
                 </Typography>
               )}
               <IconButton sx={{ p: 0 }}>
-                <Avatar alt="Profile Image" src="" />
+                <Avatar 
+                  alt={`${myData?.name || 'Profile'} Avatar`}
+                  src={myData && myData.gender === 1
+                    ? 'https://cdn-icons-png.flaticon.com/512/4140/4140047.png'
+                    : 'https://cdn-icons-png.flaticon.com/512/4140/4140048.png'
+                  }
+                  sx={{ width: 40, height: 40 }}
+                />
               </IconButton>
             </Box>
           </div>
