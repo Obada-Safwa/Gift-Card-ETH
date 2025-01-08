@@ -24,14 +24,12 @@ export default function Navbar() {
         from: addresses[0],
       });
 
-      console.log('myData structure:', data);
+      console.log("myData structure:", data);
       setMyData(data);
     };
 
     init();
   }, []);
-
-  console.log(myData);
 
   return (
     <AppBar position="static" sx={{ backgroundColor: "purple" }}>
@@ -75,24 +73,32 @@ export default function Navbar() {
               </svg>
               My Gift Cards
             </Link>
-            <Box sx={{ flexGrow: 0, display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Box
+              sx={{
+                flexGrow: 0,
+                display: "flex",
+                alignItems: "center",
+                gap: 2,
+              }}
+            >
               {myData && (
                 <Typography
                   variant="body1"
                   sx={{
-                    color: 'white',
-                    fontFamily: 'monospace',
+                    color: "white",
+                    fontFamily: "monospace",
                   }}
                 >
                   {myData.name}
                 </Typography>
               )}
               <IconButton sx={{ p: 0 }}>
-                <Avatar 
-                  alt={`${myData?.name || 'Profile'} Avatar`}
-                  src={myData && myData.gender === 1
-                    ? 'https://cdn-icons-png.flaticon.com/512/4140/4140047.png'
-                    : 'https://cdn-icons-png.flaticon.com/512/4140/4140048.png'
+                <Avatar
+                  alt={`${myData?.name || "Profile"} Avatar`}
+                  src={
+                    myData && myData.gender === 1
+                      ? "https://cdn-icons-png.flaticon.com/512/4140/4140047.png"
+                      : "https://cdn-icons-png.flaticon.com/512/4140/4140048.png"
                   }
                   sx={{ width: 40, height: 40 }}
                 />
