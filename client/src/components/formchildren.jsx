@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
@@ -51,7 +51,7 @@ export default function FormChildren({
             labelId="select-label"
             id={label}
             name={label}
-            value={value || ""}
+            value={value || 1}
             label={label}
             onChange={onChange}
           >

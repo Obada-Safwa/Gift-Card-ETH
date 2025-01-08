@@ -20,6 +20,7 @@ export default function Registration() {
   useEffect(() => {
     const init = async () => {
       const addresses = getFromLocalStorage("addresses");
+      if (!addresses) return;
 
       const contract = await getContract();
       const registered = await contract.methods.isRegistered().call({
@@ -35,6 +36,8 @@ export default function Registration() {
     setBlocked(true);
     const contract = await getContract();
     const addresses = getFromLocalStorage("addresses");
+    if (!addresses) return;
+
     await contract.methods
       .registration(formData.name, formData.gender)
       .send({ from: addresses[0] });

@@ -15,6 +15,12 @@ const FilterProvider = ({ children }) => {
       const contract = await getContract();
       const addresses = getFromLocalStorage("addresses");
       const admin = await isAdmin(contract, addresses);
+      if (!addresses) return;
+
+      const registered = await contract.methods.isRegistered().call({
+        from: addresses[0],
+      });
+      if (!registered) return;
 
       const myCards = await contract.methods.getMyCard().call({
         from: addresses[0],

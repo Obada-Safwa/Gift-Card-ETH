@@ -21,6 +21,7 @@ export default function Home() {
     setIsLoading(true);
     const contract = await getContract();
     const addresses = getFromLocalStorage("addresses");
+    if (!addresses) return;
 
     contract.events.CardBought().on("data", function (event) {
       const { code, amount } = event.returnValues;

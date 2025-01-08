@@ -19,12 +19,17 @@ export default function Navbar() {
     const init = async () => {
       const contract = await getContract();
       const addresses = getFromLocalStorage("addresses");
+      if (!addresses) return;
+
+      const registered = await contract.methods.isRegistered().call({
+        from: addresses[0],
+      });
+      if (!registered) return;
 
       const data = await contract.methods.getMyData().call({
         from: addresses[0],
       });
 
-      console.log("myData structure:", data);
       setMyData(data);
     };
 
