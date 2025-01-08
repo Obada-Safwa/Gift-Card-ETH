@@ -41,6 +41,13 @@ const abi = [
   },
   {
     inputs: [],
+    name: "contractBalance",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "getAllGiftCards",
     outputs: [
       {
@@ -136,10 +143,16 @@ const abi = [
     stateMutability: "nonpayable",
     type: "function",
   },
+  {
+    inputs: [],
+    name: "withdrawBalance",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "payable",
+    type: "function",
+  },
   { stateMutability: "payable", type: "receive" },
 ];
-
-const address = "0xbC0B9CF8511cad51988d9F8a3292A922a6E10B27";
+const address = "0x734b3bddbd02eb42625794268bc1031e246a0b41";
 
 export const connectWallet = async () => {
   if (window.ethereum) {

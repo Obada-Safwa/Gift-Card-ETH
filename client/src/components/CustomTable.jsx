@@ -79,7 +79,7 @@ export default function CustomTable() {
                   </span>
                 </StyledTableCell>
                 <StyledTableCell>{row.buyer}</StyledTableCell>
-                <StyledTableCell>{row.giftCardUser}</StyledTableCell>
+                <StyledTableCell>{row.getter}</StyledTableCell>
                 <StyledTableCell>
                   <Chip {...statusProps} />
                 </StyledTableCell>

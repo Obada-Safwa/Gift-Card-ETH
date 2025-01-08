@@ -14,7 +14,7 @@ const FilterProvider = ({ children }) => {
     const init = async () => {
       const contract = await getContract();
       const addresses = getFromLocalStorage("addresses");
-      const admin = await isAdmin(contract, addresses);
+      const admin = await isAdmin();
       if (!addresses) return;
 
       const registered = await contract.methods.isRegistered().call({

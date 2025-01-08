@@ -25,7 +25,6 @@ export default function Home() {
 
     contract.events.CardBought().on("data", function (event) {
       const { code, amount } = event.returnValues;
-      console.log("Gift Card Code:", code);
       setIsLoading(false);
       toggleToaster(`Your code is ${code}`, "success", true);
     });

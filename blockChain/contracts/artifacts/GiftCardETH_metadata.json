@@ -1,265 +1,291 @@
 {
-	"compiler": {
-		"version": "0.8.26+commit.8a97fa7a"
-	},
-	"language": "Solidity",
-	"output": {
-		"abi": [
-			{
-				"inputs": [],
-				"stateMutability": "nonpayable",
-				"type": "constructor"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "string",
-						"name": "code",
-						"type": "string"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "CardBought",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "CardRedeemed",
-				"type": "event"
-			},
-			{
-				"stateMutability": "payable",
-				"type": "fallback"
-			},
-			{
-				"inputs": [],
-				"name": "buyGiftCard",
-				"outputs": [],
-				"stateMutability": "payable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "getAllGiftCards",
-				"outputs": [
-					{
-						"components": [
-							{
-								"internalType": "string",
-								"name": "code",
-								"type": "string"
-							},
-							{
-								"internalType": "string",
-								"name": "buyer",
-								"type": "string"
-							},
-							{
-								"internalType": "uint256",
-								"name": "amount",
-								"type": "uint256"
-							},
-							{
-								"internalType": "enum GiftCardStatus",
-								"name": "giftCardStatus",
-								"type": "uint8"
-							},
-							{
-								"internalType": "string",
-								"name": "getter",
-								"type": "string"
-							}
-						],
-						"internalType": "struct GiftCard[]",
-						"name": "giftcards",
-						"type": "tuple[]"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "getMyCard",
-				"outputs": [
-					{
-						"components": [
-							{
-								"internalType": "string",
-								"name": "code",
-								"type": "string"
-							},
-							{
-								"internalType": "string",
-								"name": "buyer",
-								"type": "string"
-							},
-							{
-								"internalType": "uint256",
-								"name": "amount",
-								"type": "uint256"
-							},
-							{
-								"internalType": "enum GiftCardStatus",
-								"name": "giftCardStatus",
-								"type": "uint8"
-							},
-							{
-								"internalType": "string",
-								"name": "getter",
-								"type": "string"
-							}
-						],
-						"internalType": "struct GiftCard[]",
-						"name": "",
-						"type": "tuple[]"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "getMyData",
-				"outputs": [
-					{
-						"components": [
-							{
-								"internalType": "string",
-								"name": "name",
-								"type": "string"
-							},
-							{
-								"internalType": "enum Gender",
-								"name": "gender",
-								"type": "uint8"
-							},
-							{
-								"internalType": "enum UserType",
-								"name": "userType",
-								"type": "uint8"
-							}
-						],
-						"internalType": "struct User",
-						"name": "",
-						"type": "tuple"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "isAdmin",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "isRegistered",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "string",
-						"name": "_code",
-						"type": "string"
-					}
-				],
-				"name": "redeemCard",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "string",
-						"name": "name",
-						"type": "string"
-					},
-					{
-						"internalType": "enum Gender",
-						"name": "gender",
-						"type": "uint8"
-					}
-				],
-				"name": "registration",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"stateMutability": "payable",
-				"type": "receive"
-			}
-		],
-		"devdoc": {
-			"kind": "dev",
-			"methods": {},
-			"version": 1
-		},
-		"userdoc": {
-			"kind": "user",
-			"methods": {},
-			"version": 1
-		}
-	},
-	"settings": {
-		"compilationTarget": {
-			"contracts/GiftCardETH.sol": "GiftCardETH"
-		},
-		"evmVersion": "cancun",
-		"libraries": {},
-		"metadata": {
-			"bytecodeHash": "ipfs"
-		},
-		"optimizer": {
-			"enabled": false,
-			"runs": 200
-		},
-		"remappings": []
-	},
-	"sources": {
-		"contracts/GiftCardETH.sol": {
-			"keccak256": "0xe0965487a65931a33f169ea7deeeacc62b74c2df4c5f07d5817da0039ac6811a",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://f99e11ad0de73367e5e3db7f872cf21ee4b03e1e0117532467e997d482d76f9d",
-				"dweb:/ipfs/QmT5gYKMZXVdEamHFCTWnTuBzZjmWsMSQRxUW2NSQyaqEi"
-			]
-		}
-	},
-	"version": 1
+  "compiler": {
+    "version": "0.8.26+commit.8a97fa7a"
+  },
+  "language": "Solidity",
+  "output": {
+    "abi": [
+      {
+        "inputs": [],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "string",
+            "name": "code",
+            "type": "string"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "CardBought",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "CardRedeemed",
+        "type": "event"
+      },
+      {
+        "stateMutability": "payable",
+        "type": "fallback"
+      },
+      {
+        "inputs": [],
+        "name": "buyGiftCard",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "contractBalance",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "getAllGiftCards",
+        "outputs": [
+          {
+            "components": [
+              {
+                "internalType": "string",
+                "name": "code",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "buyer",
+                "type": "string"
+              },
+              {
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+              },
+              {
+                "internalType": "enum GiftCardStatus",
+                "name": "giftCardStatus",
+                "type": "uint8"
+              },
+              {
+                "internalType": "string",
+                "name": "getter",
+                "type": "string"
+              }
+            ],
+            "internalType": "struct GiftCard[]",
+            "name": "giftcards",
+            "type": "tuple[]"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "getMyCard",
+        "outputs": [
+          {
+            "components": [
+              {
+                "internalType": "string",
+                "name": "code",
+                "type": "string"
+              },
+              {
+                "internalType": "string",
+                "name": "buyer",
+                "type": "string"
+              },
+              {
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+              },
+              {
+                "internalType": "enum GiftCardStatus",
+                "name": "giftCardStatus",
+                "type": "uint8"
+              },
+              {
+                "internalType": "string",
+                "name": "getter",
+                "type": "string"
+              }
+            ],
+            "internalType": "struct GiftCard[]",
+            "name": "",
+            "type": "tuple[]"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "getMyData",
+        "outputs": [
+          {
+            "components": [
+              {
+                "internalType": "string",
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "internalType": "enum Gender",
+                "name": "gender",
+                "type": "uint8"
+              },
+              {
+                "internalType": "enum UserType",
+                "name": "userType",
+                "type": "uint8"
+              }
+            ],
+            "internalType": "struct User",
+            "name": "",
+            "type": "tuple"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "isAdmin",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "isRegistered",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "_code",
+            "type": "string"
+          }
+        ],
+        "name": "redeemCard",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "enum Gender",
+            "name": "gender",
+            "type": "uint8"
+          }
+        ],
+        "name": "registration",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [],
+        "name": "withdrawBalance",
+        "outputs": [
+          {
+            "internalType": "bool",
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "stateMutability": "payable",
+        "type": "function"
+      },
+      {
+        "stateMutability": "payable",
+        "type": "receive"
+      }
+    ],
+    "devdoc": {
+      "kind": "dev",
+      "methods": {},
+      "version": 1
+    },
+    "userdoc": {
+      "kind": "user",
+      "methods": {},
+      "version": 1
+    }
+  },
+  "settings": {
+    "compilationTarget": {
+      "contracts/GiftCardETH.sol": "GiftCardETH"
+    },
+    "evmVersion": "cancun",
+    "libraries": {},
+    "metadata": {
+      "bytecodeHash": "ipfs"
+    },
+    "optimizer": {
+      "enabled": false,
+      "runs": 200
+    },
+    "remappings": []
+  },
+  "sources": {
+    "contracts/GiftCardETH.sol": {
+      "keccak256": "0x5f8afe79f5d89eda23d127b5d65b5b822b11fedca20982002c272b589f19b7b4",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://f0d776d3724e0cfffbe62610f29b591a2bff0b15f99f2548c7e3567c241f50dd",
+        "dweb:/ipfs/QmVsDtcrfTW5bjX5wKH5zS4daypG7xpHUodkhCUBja6Ks5"
+      ]
+    }
+  },
+  "version": 1
 }

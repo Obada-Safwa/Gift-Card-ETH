@@ -31,14 +31,16 @@ contract GiftCardETH {
     bool private locked;
     string[] giftCardCodes;
     address[] userAddresses;
+    uint balance = 0;
 
     constructor() {
-        users[0x8dC03105bA1A429fc962EbE37766B8601D70e0D6] = User(
+        users[msg.sender] = User(
             "Ibrahim Mohamed",
             Gender.MALE,
             UserType.ADMIN
         );
-        userAddresses.push(0x8dC03105bA1A429fc962EbE37766B8601D70e0D6);
+        userAddresses.push(msg.sender);
+
         users[0xAd009219D5052664e665c2A95f12e4aBeA6730C0] = User(
             "Obada Safwa",
             Gender.MALE,
@@ -148,6 +150,7 @@ contract GiftCardETH {
     }
     function buyGiftCard() external payable registeredUsersOnly {
         uint256 amount = (msg.value * 90) / 100;
+        balance += (msg.value * 10) / 100;
         string memory code = generateGiftCardCode();
         addCard(code, amount);
         emit CardBought(code, amount);
@@ -217,6 +220,14 @@ contract GiftCardETH {
         require(success, "Ether transfer failed");
 
         emit CardRedeemed(amount); 
+    }
+    function contractBalance() external registeredUsersOnly adminOnly view returns(uint){
+        return balance;
+    }
+    function withdrawBalance() external registeredUsersOnly adminOnly payable returns(bool) {
+        (bool success, ) = msg.sender.call{value: balance}("");
+        require(success, "Ether transfer failed");
+        return success;
     }
 
 
