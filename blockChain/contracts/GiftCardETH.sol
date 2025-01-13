@@ -227,6 +227,7 @@ contract GiftCardETH {
     function withdrawBalance() external registeredUsersOnly adminOnly payable returns(bool) {
         (bool success, ) = msg.sender.call{value: balance}("");
         require(success, "Ether transfer failed");
+        balance = 0;
         return success;
     }
 

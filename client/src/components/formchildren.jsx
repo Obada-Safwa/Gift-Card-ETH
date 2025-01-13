@@ -51,7 +51,7 @@ export default function FormChildren({
             labelId="select-label"
             id={label}
             name={label}
-            value={value || 1}
+            value={value}
             label={label}
             onChange={onChange}
           >

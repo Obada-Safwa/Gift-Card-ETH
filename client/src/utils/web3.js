@@ -152,7 +152,7 @@ const abi = [
   },
   { stateMutability: "payable", type: "receive" },
 ];
-const address = "0x734b3bddbd02eb42625794268bc1031e246a0b41";
+const address = "0x558c25a998c17305c414bcb590d9dc21a04d466d";
 
 export const connectWallet = async () => {
   if (window.ethereum) {

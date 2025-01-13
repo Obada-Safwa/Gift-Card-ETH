@@ -101,7 +101,7 @@ export default function Navbar() {
                 <Avatar
                   alt={`${myData?.name || "Profile"} Avatar`}
                   src={
-                    myData && myData.gender === 1
+                    myData && myData.gender === 0n
                       ? "https://cdn-icons-png.flaticon.com/512/4140/4140047.png"
                       : "https://cdn-icons-png.flaticon.com/512/4140/4140048.png"
                   }
